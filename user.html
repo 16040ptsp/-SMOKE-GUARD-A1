@@ -55,8 +55,8 @@
 
     <script>
         function updateData() {
-    // 🚨 น้าเปลี่ยนเลข 10.20.1.215 ให้เป็น IP ล่าสุดที่ขึ้นบนจอบอร์ด IPST ของน้าด้วยนะครับ
-    fetch('http://10.20.1.215/data') 
+    // 🚨 เป็น IP ที่ขึ้นบนจอบอร์ด IPST 
+    fetch('http://192.168.1.123/data') 
         .then(res => res.json())
         .then(data => {
             document.getElementById('pm-value').innerText = data.pm25;

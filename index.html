@@ -120,8 +120,29 @@
     </div>
 
     <script>
-        // แสดงเวลาปัจจุบันบนหน้าเว็บโชว์
-        document.getElementById('updated-time').innerText = new Date().toLocaleTimeString('th-TH');
+        // ฟังก์ชันสุ่มตัวเลขจำลองให้หน้าเว็บเคลื่อนไหวอัตโนมัติ
+        function simulateData() {
+            // สุ่มค่า PM2.5 (ให้อยู่ในช่วง 20 - 45)
+            let randomPM = Math.floor(Math.random() * (45 - 20 + 1)) + 20;
+            // สุ่มค่าแก๊ส (ให้อยู่ในช่วง 210 - 260)
+            let randomGas = Math.floor(Math.random() * (260 - 210 + 1)) + 210;
+            // สุ่มอุณหภูมิ (ให้อยู่ในช่วง 28.0 - 29.5)
+            let randomTemp = (Math.random() * (29.5 - 28.0) + 28.0).toFixed(1);
+
+            // อัปเดตตัวเลขลงบนหน้าเว็บ
+            document.getElementById('pm-value').innerText = randomPM;
+            document.getElementById('gas-value').innerText = randomGas;
+            document.getElementById('temp-value').innerText = randomTemp;
+
+            // อัปเดตเวลาล่าสุด
+            document.getElementById('updated-time').innerText = new Date().toLocaleTimeString('th-TH');
+        }
+
+        // ให้ทำงานทันทีที่เปิดเว็บ และทำงานซ้ำทุก ๆ 3 วินาที (3000 มิลลิวินาที)
+        simulateData();
+        setInterval(simulateData, 3000);
+        
+        // เรียกใช้งานไอคอนของ Lucide
         lucide.createIcons();
     </script>
 </body>

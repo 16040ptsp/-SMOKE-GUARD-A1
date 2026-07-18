@@ -1,26 +1,128 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang='th'>
 <head>
-    <title>ประวัติส่วนตัวของฉัน</title>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>SMOKE GUARD A1</title>
+    <script src='https://cdn.tailwindcss.com/3.4.17'></script>
+    <script src='https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js'></script>
+    <link href='https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap' rel='stylesheet'>
+    <style>
+        :root{--ink:#19212d;--muted:#738093;--line:#e4eaf0;--page:#eef2f6;--danger:#ff4757;--amber:#f5a623;--green:#22b573;--blue:#3185d9;}
+        *{box-sizing:border-box;}
+        body{margin:0;width:100%;font-family:'Noto Sans Thai','DM Sans',sans-serif;color:var(--ink);}
+        .app-shell{width:100%;min-height:100vh;display:flex;flex-direction:column;padding:28px 18px 20px;position:relative;overflow:hidden;}
+        .app-shell::before,.app-shell::after{content:'';position:absolute;pointer-events:none;border-radius:999px;filter:blur(10px);opacity:.55;}
+        .app-shell::before{width:260px;height:260px;background:#dceeff;top:-125px;left:-100px;}
+        .app-shell::after{width:210px;height:210px;background:#ffe3df;right:-100px;bottom:-95px;}
+        .dashboard-wrap{width:100%;max-width:920px;margin:auto;position:relative;z-index:1;}
+        .identity-bar{display:flex;align-items:center;justify-content:center;gap:11px;margin-bottom:14px;color:#536174;}
+        .identity-line{height:1px;width:clamp(24px,8vw,64px);background:#cbd5df;}
+        .identity-mark{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:#dceeff;color:#1772c7;}
+        .dashboard-panel{border:1px solid rgba(218,225,233,.95);border-radius:24px;box-shadow:0 18px 45px rgba(49,69,93,.13);overflow:hidden;}
+        .panel-top{padding:30px 30px 25px;text-align:center;border-bottom:1px solid var(--line);position:relative;}
+        .flame{display:inline-flex;color:var(--danger);vertical-align:middle;margin:0 7px;}
+        .status-wrap{display:flex;justify-content:center;margin-top:14px;}
+        .status-pill{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:7px 13px;font-size:13px;font-weight:700;transition:.25s ease;}
+        .status-dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 4px rgba(34, 181, 115, .14);}
+        .sensor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:22px 24px 18px;}
+        .sensor-card{min-height:180px;border-radius:18px;padding:20px 18px;display:flex;flex-direction:column;text-align:left;transition:transform .2s ease,box-shadow .2s ease;}
+        .sensor-card:hover{transform:translateY(-3px);box-shadow:0 12px 24px rgba(45, 60, 80, .1);}
+        .sensor-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;margin-bottom:20px;}
+        .metric-value{font-family:'DM Sans','Noto Sans Thai',sans-serif;font-weight:700;font-size:clamp(30px,4vw,42px);line-height:1;letter-spacing:-0.06em;margin-top:8px;}
+        .metric-unit{font-family:'DM Sans','Noto Sans Thai',sans-serif;font-size:14px;font-weight:600;letter-spacing:0;margin-left:4px;}
+        .metric-caption{margin-top:auto;padding-top:16px;color:#7c8999;font-size:12px;}
+        .panel-bottom{border-top:1px solid var(--line);padding:18px 24px 23px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:15px;}
+        .update-info{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:13px;}
+        .dashboard-footer{text-align:center;margin-top:17px;color:#8190a1;font-size:12px;}
+        @media(max-width:680px){
+            .app-shell{padding:20px 13px 16px;}
+            .panel-top{padding:26px 18px 21px;}
+            .sensor-grid{grid-template-columns:1fr;padding:16px;gap:11px;}
+            .sensor-card{min-height:128px;flex-direction:row;flex-wrap:wrap;align-items:center;gap:0 15px;}
+            .sensor-icon{margin:0;}
+            .metric-value{margin:0;}
+            .metric-caption{width:100%;padding-top:10px;}
+            .panel-bottom{padding:16px;}
+        }
+    </style>
 </head>
-<body>
+<body class='bg-slate-100'>
+    <div class='app-shell'>
+        <header class='dashboard-wrap'>
+            <div class='identity-bar'>
+                <span class='identity-line'></span>
+                <span class='identity-mark'><i data-lucide='shield-check' width='16' height='16'></i></span>
+                <p class='font-semibold m-0 text-center'>SECURITY SYSTEM</p>
+                <span class='identity-line'></span>
+            </div>
+        </header>
+        
+        <main class='dashboard-wrap'>
+            <section class='bg-white dashboard-panel'>
+                <div class='panel-top'>
+                    <h1 class='font-bold text-2xl m-0'>
+                        <span class='flame'><i data-lucide='flame' width='22' height='22'></i></span> 
+                        SMOKE GUARD A1 
+                        <span class='flame'><i data-lucide='flame' width='22' height='22'></i></span>
+                    </h1>
+                    <p class='text-gray-500 mt-2 mb-0'>ระบบเฝ้าระวังและตรวจจับควันอัจฉริยะ (Demo บน GitHub)</p>
+                    <div class='status-wrap'>
+                        <div id='status-pill' class='status-pill' style='background:#e5f8ef; color:#188d58;'>
+                            <span class='status-dot'></span>
+                            <span id='status-text'>ระบบทำงานปกติ (จำลองตัวอย่าง)</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <section class='sensor-grid'>
+                    <article class='sensor-card bg-orange-50'>
+                        <div class='sensor-icon bg-orange-200 text-orange-600'><i data-lucide='wind' width='23' height='23'></i></div>
+                        <div>
+                            <h2 class='font-bold text-slate-700 m-0'>ปริมาณฝุ่น PM 2.5</h2>
+                            <p class='metric-value text-orange-600'><span id='pm-value'>35</span><span class='metric-unit'>µg/m³</span></p>
+                        </div>
+                        <p class='metric-caption mb-0'>ตรวจจับฝุ่นและละอองควันพิกัดละเอียด</p>
+                    </article>
+                    
+                    <article class='sensor-card bg-emerald-50'>
+                        <div class='sensor-icon bg-emerald-200 text-emerald-600'><i data-lucide='biohazard' width='23' height='23'></i></div>
+                        <div>
+                            <h2 class='font-bold text-slate-700 m-0'>ความหนาแน่นแก๊ส</h2>
+                            <p class='metric-value text-emerald-600'><span id='gas-value'>240</span></p>
+                        </div>
+                        <p class='metric-caption mb-0'>ดักจับควันไฟและก๊าซพิษในอากาศ</p>
+                    </article>
+                    
+                    <article class='sensor-card bg-blue-50'>
+                        <div class='sensor-icon bg-blue-200 text-blue-600'><i data-lucide='thermometer-sun' width='23' height='23'></i></div>
+                        <div>
+                            <h2 class='font-bold text-slate-700 m-0'>อุณหภูมิห้อง</h2>
+                            <p class='metric-value text-blue-600'><span id='temp-value'>28.5</span><span class='metric-unit'>°C</span></p>
+                        </div>
+                        <p class='metric-caption mb-0'>สภาพอากาศจากเซนเซอร์ DHT11</p>
+                    </article>
+                </section>
+                
+                <div class='panel-bottom'>
+                    <div class='update-info'>
+                        <i data-lucide='clock-3' width='16' height='16'></i>
+                        <span>อัปเดตล่าสุด:</span>
+                        <time id='updated-time'></time>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class='dashboard-wrap dashboard-footer'>
+            <p class='m-0'>© 2026 SMOKE GUARD A1 - Smart IoT Innovation</p>
+        </footer>
+    </div>
 
-    <h1>ยินดีต้อนรับสู่เว็บของฉัน</h1>
-    <p>สวัสดีครับ! นี่คือเว็บไซต์แรกที่ฉันลองเขียนขึ้นมาเอง</p>
-
-    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba" alt="รูปภาพโปรไฟล์" width="200">
-
-    <hr>
-
-    <h2>ข้อมูลส่วนตัว</h2>
-    <ul>
-        <li><b>ชื่อ:</b> [ใส่ชื่อของคุณตรงนี้]</li>
-        <li><b>งานอดิเรก:</b> [ใส่งานอดิเรก เช่น เล่นเกม, ฟังเพลง]</li>
-        <li><b>สิ่งที่ชอบ:</b> [ใส่สิ่งที่คุณชอบ เช่น แมว, ชาไข่มุก]</li>
-    </ul>
-
-    <h2>ช่องทางการติดต่อ</h2>
-    <p>สามารถติดตามฉันได้ที่ <a href="https://www.facebook.com" target="_blank">Facebook</a> หรือ <a href="https://www.instagram.com" target="_blank">Instagram</a> ได้เลยครับ</p>
-
+    <script>
+        // แสดงเวลาปัจจุบันบนหน้าเว็บโชว์
+        document.getElementById('updated-time').innerText = new Date().toLocaleTimeString('th-TH');
+        lucide.createIcons();
+    </script>
 </body>
 </html>

@@ -120,29 +120,41 @@
     </div>
 
     <script>
-        // ฟังก์ชันสุ่มตัวเลขจำลองให้หน้าเว็บเคลื่อนไหวอัตโนมัติ
         function simulateData() {
-            // สุ่มค่า PM2.5 (ให้อยู่ในช่วง 20 - 45)
-            let randomPM = Math.floor(Math.random() * (45 - 20 + 1)) + 20;
-            // สุ่มค่าแก๊ส (ให้อยู่ในช่วง 210 - 260)
+            // สุ่มค่า PM2.5 ให้กว้างขึ้น (20 - 180) เพื่อให้เห็นช่วงที่ระบบแจ้งเตือนด้วย
+            let randomPM = Math.floor(Math.random() * (180 - 20 + 1)) + 20;
             let randomGas = Math.floor(Math.random() * (260 - 210 + 1)) + 210;
-            // สุ่มอุณหภูมิ (ให้อยู่ในช่วง 28.0 - 29.5)
             let randomTemp = (Math.random() * (29.5 - 28.0) + 28.0).toFixed(1);
 
-            // อัปเดตตัวเลขลงบนหน้าเว็บ
             document.getElementById('pm-value').innerText = randomPM;
             document.getElementById('gas-value').innerText = randomGas;
             document.getElementById('temp-value').innerText = randomTemp;
 
-            // อัปเดตเวลาล่าสุด
+            // ตรรกะเปลี่ยนสีป้ายสถานะอัตโนมัติตามค่าฝุ่น PM2.5 ที่สุ่มได้
+            let pill = document.getElementById('status-pill');
+            let txt = document.getElementById('status-text');
+            
+            if(randomPM >= 150){
+                txt.innerText = 'แจ้งเตือน: ควัน/ฝุ่น สูงเกินมาตรฐาน';
+                pill.style.background = '#ffe3e5';
+                pill.style.color = '#dd3445';
+            }
+            else if(randomPM >= 81){
+                txt.innerText = 'เฝ้าระวังคุณภาพอากาศ';
+                pill.style.background = '#fff1d8';
+                pill.style.color = '#b86d00';
+            }
+            else{
+                txt.innerText = 'ระบบทำงานปกติ (จำลองตัวอย่าง)';
+                pill.style.background = '#e5f8ef';
+                pill.style.color = '#188d58';
+            }
+
             document.getElementById('updated-time').innerText = new Date().toLocaleTimeString('th-TH');
         }
 
-        // ให้ทำงานทันทีที่เปิดเว็บ และทำงานซ้ำทุก ๆ 3 วินาที (3000 มิลลิวินาที)
         simulateData();
         setInterval(simulateData, 3000);
-        
-        // เรียกใช้งานไอคอนของ Lucide
         lucide.createIcons();
     </script>
 </body>

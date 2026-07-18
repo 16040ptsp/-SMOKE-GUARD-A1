@@ -1,0 +1,112 @@
+:root {
+    --ink: #19212d;
+    --muted: #738093;
+    --line: #e4eaf0;
+    --page: #eef2f6;
+    --danger: #ff4757;
+    --amber: #f5a623;
+    --green: #22b573;
+    --blue: #3185d9;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    font-family: 'Noto Sans Thai', 'DM Sans', sans-serif;
+    color: var(--ink);
+}
+
+.app-shell {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 18px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* ตกแต่งวงกลมแสงด้านหลังให้ดูหรูหรา */
+.app-shell::before, .app-shell::after {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    border-radius: 999px;
+    filter: blur(10px);
+    opacity: .55;
+}
+
+.app-shell::before {
+    width: 260px;
+    height: 260px;
+    background: #dceeff;
+    top: -125px;
+    left: -100px;
+}
+
+.app-shell::after {
+    width: 210px;
+    height: 210px;
+    background: #ffe3df;
+    right: -100px;
+    bottom: -95px;
+}
+
+.dashboard-wrap {
+    width: 100%;
+    max-width: 920px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.dashboard-panel {
+    border: 1px solid rgba(218,225,233,.95);
+    border-radius: 24px;
+    box-shadow: 0 18px 45px rgba(49,69,93,.13);
+    overflow: hidden;
+}
+
+.flame {
+    display: inline-flex;
+    color: var(--danger);
+    vertical-align: middle;
+    margin: 0 7px;
+}
+
+.sensor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    padding: 22px 24px 18px;
+}
+
+.sensor-card {
+    min-height: 180px;
+    border-radius: 18px;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.sensor-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(45, 60, 80, .1);
+}
+
+/* หน้าจอขนาดเล็ก (มือถือ) ให้จัดเรียงแบบแถวเดี่ยว */
+@media(max-width: 680px) {
+    .sensor-grid {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 11px;
+    }
+    .sensor-card {
+        min-height: 128px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+}

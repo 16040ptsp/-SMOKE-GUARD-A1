@@ -121,16 +121,15 @@
 
     <script>
         function simulateData() {
-            // สุ่มค่า PM2.5 ให้กว้างขึ้น (20 - 180) เพื่อให้เห็นช่วงที่ระบบแจ้งเตือนด้วย
             let randomPM = Math.floor(Math.random() * (180 - 20 + 1)) + 20;
             let randomGas = Math.floor(Math.random() * (260 - 210 + 1)) + 210;
             let randomTemp = (Math.random() * (29.5 - 28.0) + 28.0).toFixed(1);
 
+            // ตรงนี้เปลี่ยนจาก -> เป็น = ให้เรียบร้อยแล้วครับน้า
             document.getElementById('pm-value').innerText = randomPM;
             document.getElementById('gas-value').innerText = randomGas;
             document.getElementById('temp-value').innerText = randomTemp;
 
-            // ตรรกะเปลี่ยนสีป้ายสถานะอัตโนมัติตามค่าฝุ่น PM2.5 ที่สุ่มได้
             let pill = document.getElementById('status-pill');
             let txt = document.getElementById('status-text');
             

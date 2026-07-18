@@ -7,7 +7,7 @@ function enterAsUser() {
     document.getElementById('role-badge').innerText = '👤 โหมดบุคคลทั่วไป';
     document.getElementById('role-badge').className = 'text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-600';
     switchPage('dashboard-page');
-    startSimulation();
+    startRealDataFetch(); // เปลี่ยนมาเรียกใช้ฟังก์ชันดึงค่าจริง
 }
 
 // แสดง/ซ่อน กล่องกรอกรหัสผ่านแอดมิน
@@ -22,7 +22,6 @@ function verifyAdmin() {
     let passInput = document.getElementById('admin-password').value;
     let errorMsg = document.getElementById('login-error');
     
-    // 🔑 น้าเปลี่ยนรหัสผ่านแอดมินตรงเลข '1234' นี้ได้เลยครับตามใจชอบ
     if(passInput === '1234') { 
         errorMsg.classList.add('hidden');
         currentRole = 'admin';
@@ -31,7 +30,7 @@ function verifyAdmin() {
         document.getElementById('admin-password').value = '';
         document.getElementById('admin-form').classList.add('hidden');
         switchPage('dashboard-page');
-        startSimulation();
+        startRealDataFetch(); // เปลี่ยนมาเรียกใช้ฟังก์ชันดึงค่าจริง
     } else {
         errorMsg.classList.remove('hidden');
     }
@@ -50,42 +49,52 @@ function backToPortal() {
     clearInterval(dataInterval);
 }
 
-// ฟังก์ชันเริ่มรันสุ่มข้อมูลฝุ่น
-function startSimulation() {
-    function simulateData() {
-        let randomPM = Math.floor(Math.random() * (180 - 20 + 1)) + 20;
-        let randomGas = Math.floor(Math.random() * (260 - 210 + 1)) + 210;
-        let randomTemp = (Math.random() * (29.5 - 28.0) + 28.0).toFixed(1);
+// ==========================================
+// 🔄 ส่วนดึงค่าจริงจากบอร์ด IPST (ของเดิมของน้า)
+// ==========================================
+function startRealDataFetch() {
+    function updateData() {
+        // วิ่งไปดึงค่าจากบอร์ด IPST (ใช้ Endpoint '/data' เดิมที่บอร์ดน้าปล่อยออกมา)
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                // นำค่าจริงจากบอร์ดมาใส่ใน Grid แดชบอร์ด
+                document.getElementById('pm-value').innerText = data.pm25;
+                document.getElementById('gas-value').innerText = data.gas;
+                document.getElementById('temp-value').innerText = data.temp;
 
-        document.getElementById('pm-value').innerText = randomPM;
-        document.getElementById('gas-value').innerText = randomGas;
-        document.getElementById('temp-value').innerText = randomTemp;
+                // ตรรกะเปลี่ยนสีป้ายเตือนตามค่าฝุ่นจริง
+                let pill = document.getElementById('status-pill');
+                let txt = document.getElementById('status-text');
+                
+                if(data.pm25 >= 150){
+                    txt.innerText = 'แจ้งเตือน: ควัน/ฝุ่น สูงเกินมาตรฐาน';
+                    pill.style.background = '#ffe3e5';
+                    pill.style.color = '#dd3445';
+                }
+                else if(data.pm25 >= 81){
+                    txt.innerText = 'เฝ้าระวังคุณภาพอากาศ';
+                    pill.style.background = '#fff1d8';
+                    pill.style.color = '#b86d00';
+                }
+                else{
+                    txt.innerText = 'ระบบทำงานปกติ (สถานะ: ' + (currentRole === 'admin' ? 'แอดมินคุม' : 'ผู้ชม') + ')';
+                    pill.style.background = '#e5f8ef';
+                    pill.style.color = '#188d58';
+                }
 
-        let pill = document.getElementById('status-pill');
-        let txt = document.getElementById('status-text');
-        
-        if(randomPM >= 150){
-            txt.innerText = 'แจ้งเตือน: ควัน/ฝุ่น สูงเกินมาตรฐาน';
-            pill.style.background = '#ffe3e5';
-            pill.style.color = '#dd3445';
-        }
-        else if(randomPM >= 81){
-            txt.innerText = 'เฝ้าระวังคุณภาพอากาศ';
-            pill.style.background = '#fff1d8';
-            pill.style.color = '#b86d00';
-        }
-        else{
-            txt.innerText = 'ระบบทำงานปกติ (สถานะ: ' + (currentRole === 'admin' ? 'แอดมินคุม' : 'ผู้ชม') + ')';
-            pill.style.background = '#e5f8ef';
-            pill.style.color = '#188d58';
-        }
-
-        document.getElementById('updated-time').innerText = new Date().toLocaleTimeString('th-TH');
+                document.getElementById('updated-time').innerText = new Date().toLocaleTimeString('th-TH');
+            })
+            .catch(err => {
+                console.error('Error fetching data:', err);
+                document.getElementById('status-text').innerText = 'เชื่อมต่อบอร์ดไม่ได้...';
+            });
     }
 
-    simulateData();
+    updateData();
     clearInterval(dataInterval);
-    dataInterval = setInterval(simulateData, 3000);
+    // ดึงข้อมูลใหม่จากบอร์ดจริงทุก ๆ 3 วินาที
+    dataInterval = setInterval(updateData, 3000);
 }
 
 // โหลดไอคอนตอนเริ่มต้นระบบ

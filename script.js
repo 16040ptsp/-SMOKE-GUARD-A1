@@ -94,7 +94,7 @@ function startRealDataFetch() {
     updateData();
     clearInterval(dataInterval);
     // ดึงข้อมูลใหม่จากบอร์ดจริงทุก ๆ 3 วินาที
-    dataInterval = setInterval(updateData, 3000);
+    dataInterval = setInterval(updateData, 1000);
 }
 
 // โหลดไอคอนตอนเริ่มต้นระบบ

@@ -56,7 +56,7 @@
     <script>
         function updateData() {
     // 🚨 เป็น IP ที่ขึ้นบนจอบอร์ด IPST 
-    fetch('http://192.168.1.123/data') 
+    fetch('http://10.20.1.62/data') 
         .then(res => res.json())
         .then(data => {
             document.getElementById('pm-value').innerText = data.pm25;
